@@ -1,42 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const translateBtn = document.getElementById("translate-btn");
-  const inputText = document.getElementById("input-text");
+document.getElementById("translate-btn").addEventListener("click", async () => {
+  const inputText = document.getElementById("input-text").value;
   const resultDiv = document.getElementById("result");
-  let selectedStyle = "native";
 
-  // 스타일 버튼 클릭 이벤트
-  document.querySelectorAll(".icon-buttons button").forEach(button => {
-    button.addEventListener("click", () => {
-      selectedStyle = button.dataset.style;
-      resultDiv.textContent = `Selected style: ${selectedStyle}`;
+  if (!inputText.trim()) {
+    resultDiv.textContent = "Please enter text to translate.";
+    return;
+  }
+
+  try {
+    const response = await fetch("http://127.0.0.1:5000/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sentence: inputText.trim(), // 'sentence' 키에 사용자 입력값 전송
+        style: "native"             // 'style' 키에 번역 스타일 전송
+      })
     });
-  });
 
-  // 번역 버튼 클릭 이벤트
-  translateBtn.addEventListener("click", async () => {
-    const text = inputText.value.trim();
+    const data = await response.json();
 
-    if (!text) {
-      resultDiv.textContent = "Please enter text to translate.";
-      return;
+    if (response.ok) {
+      resultDiv.textContent = data.translated;
+    } else {
+      resultDiv.textContent = data.error || "An error occurred during translation.";
     }
-
-    try {
-      const response = await fetch("https://wesay.onrender.com/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sentence: text, style: selectedStyle })
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        resultDiv.textContent = data.translated;
-      } else {
-        resultDiv.textContent = `Error: ${data.error}`;
-      }
-    } catch (error) {
-      resultDiv.textContent = "Failed to connect to the server.";
-      console.error(error);
-    }
-  });
+  } catch (error) {
+    console.error("Error:", error);
+    resultDiv.textContent = "Failed to connect to the server.";
+  }
 });

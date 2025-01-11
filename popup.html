@@ -35,35 +35,6 @@
   <button id="translate-btn">Translate</button>
   <div id="result"></div>
 
-  <script>
-    document.getElementById("translate-btn").addEventListener("click", async () => {
-      const inputText = document.getElementById("input-text").value;
-      const resultDiv = document.getElementById("result");
-
-      if (!inputText.trim()) {
-        resultDiv.textContent = "Please enter text to translate.";
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:5000/translate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: inputText })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          resultDiv.textContent = data.translated;
-        } else {
-          resultDiv.textContent = data.error || "An error occurred during translation.";
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        resultDiv.textContent = "Failed to connect to the server.";
-      }
-    });
-  </script>
+  <script src="popup.js"></script>
 </body>
 </html>
