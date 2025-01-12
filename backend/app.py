@@ -19,12 +19,12 @@ def translate():
         return jsonify({'error': 'Invalid input'}), 400
 
     # OpenAI API 호출
-    prompt = f"Rewrite this sentence in a {style} style, like a casual American Instagram post: {sentence}"
+    prompt = f"Rewrite this sentence in a {style} style, like a casual American accent.: {sentence}"
     try:
         completion = openai.chat.completions.create(
             model="gpt-4", 
             messages=[
-                {"role": "system", "content": "You are an expert in rewriting sentences into a casual American Instagram style."},
+                {"role": "system", "content": "You are an expert in rewriting sentences into a casual American style."},
                 {"role": "user", "content": prompt}
             ]
         )

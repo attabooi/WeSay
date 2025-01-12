@@ -1,81 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Noto Sans KR (한글 폰트) -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Roboto (영문 폰트) -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
   <title>WeSay Translator</title>
   <style>
     body {
-      font-family: Consolas, 'Noto Sans KR', sans-serif;
-      padding: 10px;
-      width: 300px; /* 너비 */
-      height: 400px; /* 높이 */
-      
+        font-family: Consolas, 'Noto Sans KR', sans-serif;
+        margin: 0;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+        box-sizing: border-box;
+        width: 100vw; /* 창 너비 기준 */
+        height: 100vh; /* 창 높이 기준 */
+        overflow: hidden;
     }
 
-    textarea, #result, h1, button {
-    font-family: Consolas, 'Noto Sans KR', sans-serif;
-  }
-
-
-    
     h1 {
-    font-family: 'consolas', Arial, sans-serif; /* 원하는 폰트를 지정 */
-    font-size: 24px; /* 글자 크기 */
-    font-weight: bold; /* 글자 두께 */
-    color: #333; /* 글자 색상 */
-  }
-    textarea {
-      outline: none;
-      width: 100%;
-      height: 80px;
-      margin-bottom: 10px;
-      font-size: 16px; /* 텍스트 크기 */
-      font-family: Consolas, 'Noto Sans KR', sans-serif;
-    }
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      width: 100%;
-    }
-    #result {
-      font-family: "consolas", sans-serif; /* 글꼴 변경 */
-      font-size: 18px; /* 글자 크기 조정 */
-      font-weight: bold; /* 굵게 설정 */
-      color: #2c3e50; /* 텍스트 색상 변경 */
-      margin-top: 10px;
-      padding: 15px;
-      background-color: #eaf4fc; /* 배경 색상 */
-      border: 1px solid #007bff;
-      border-radius: 5px;
-    }
-        /* 영문 텍스트에 Roboto 적용 */
-    @font-face {
-      font-family: 'CustomFont';
-      src: local('consolas');
-      unicode-range: U+0020-007F; /* 영어 및 기본 라틴 문자 */
+        font-family: 'Consolas', Arial, sans-serif;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin: 0;
+        flex-shrink: 0; /* 헤더 크기 고정 */
     }
 
-    /* 한글 텍스트에 Noto Sans KR 적용 */
-    @font-face {
-      font-family: 'CustomFont';
-      src: local('Noto Sans KR');
-      unicode-range: U+AC00-D7AF; /* 한글 */
+    textarea {
+        outline: none;
+        resize: none;
+        overflow: auto;
+        flex: 1;
+        border: 1px solid #007bff;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        min-height: 100px; /* 최소 높이 */
+        
+    }
+
+    #result {
+        font-family: Consolas, 'Noto Sans KR', sans-serif;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #2c3e50;
+        padding: 15px;
+        background-color: #eaf4fc;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        flex: 1;
+        overflow: auto;
+        box-sizing: border-box;
+        min-height: 100px; /* 최소 높이 */
+        max-height: 800px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        flex-shrink: 0; /* 버튼 크기 고정 */
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* 반응형 레이아웃 */
+    @media (max-width: 400px) {
+        textarea, #result {
+            font-size: 0.9rem;
+            padding: 8px;
+        }
+
+        button {
+            font-size: 1rem;
+            padding: 8px;
+        }
+    }
+
+
+    /* 크기 조절 핸들 */
+    #resize-handle {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 15px;
+      height: 15px;
+      background: transparent; /* 투명 처리 */
+      cursor: nwse-resize;
+    }
+
+    /* 마우스가 올라갔을 때 커서 표시 */
+    #resize-handle:hover {
+      background: rgba(0, 123, 255, 0.2); /* 투명한 배경 표시 */
     }
   </style>
 </head>
 <body>
   <h1>We say ...&#x1F60C;</h1>
-  <textarea id="input-text" placeholder="Hello, world!" spellcheck="false"></textarea>
-  <button id="translate-btn">Translate</button>
-  <div id="result"></div>
-
+  <textarea id="input-text" placeholder="Type here..." spellcheck="false"></textarea>
+  <div id="result">Translation will appear here...</div>
+  <div id="resize-handle"></div>
   <script src="popup.js"></script>
+  <script src="resize.js"></script>
 </body>
 </html>
