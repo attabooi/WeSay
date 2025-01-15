@@ -13,7 +13,7 @@ document.getElementById("translate-btn").addEventListener("click", async () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         sentence: inputText.trim(), // 'sentence' 키에 사용자 입력값 전송
-        style: "native"             // 'style' 키에 번역 스타일 전송
+        style: "playful and casual"             // 'style' 키에 번역 스타일 전송
       })
     });
 
