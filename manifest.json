@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "WeSay",
   "version": "1.0",
+
   "description": "Make your words flow like a native",
   "permissions": ["activeTab", "scripting"],
   "content_security_policy": {
@@ -17,7 +18,7 @@
     "128": "img/icon128.png"
   },
   "action": {
-    "default_popup": "popup.html",
+    "default_title": "WeSay",
     "default_icon": {
       "16": "img/icon16.png",
       "48": "img/icon48.png",
@@ -30,5 +31,4 @@
       "js": ["content.js"]
     }
   ]
-
 }
